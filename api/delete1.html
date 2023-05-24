@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- <div class="contianer p-5">
+        <table class="table table-success">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>age</th>
+                    <th>profilimage</th>
+                    <th colspan="2">action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+       function lastData() {
+        fetch('https://646da3fa9c677e23218a2d12.mockapi.io/students')
+        .then(res=>res.json())
+        .then(data=>{
+            const tbody = document.querySelector('tbody')
+            tbody.innerHTML ='';
+            data.forEach(el => {
+            tbody.innerHTML += `
+                <tr>
+                    <th>${el.id}</th>
+                    <th>${el.name}</th>
+                    <th>${el.surname}</th>
+                    <th>${el.age}</th>
+                    <th><img src="${el.profilimage}" width=50></th>
+                    <th><a href="" class= "btn btn-success">Edit</a></th>
+                    <th><button class= "btn btn-danger">Edit</button></th>
+                </tr>
+                `
+            })
+        }).catch(err=>console.log(error))
+       }
+       lastData() 
+        
+    </script> -->
+
+
+    <div class="contianer p-5">
+        <a href="index.html" class="btn btn-success my-4">create</a>
+        <table class="table table-success">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>age</th>
+                    <th>profilimage</th>
+                    <th colspan="2">action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function getdatas() {
+            fetch('https://646da3fa9c677e23218a2d12.mockapi.io/students')
+        .then(res=>res.json())
+        .then(data=>{
+            const tbody =document.querySelector('tbody')
+            tbody.innerHTML = '';
+            data.forEach(el => {
+            tbody.innerHTML +=`
+                <tr>
+                    <td>${el.id}</td>
+                    <td>${el.name}</td>
+                    <td>${el.surname}</td>
+                    <td>${el.age}</td>
+                    <td><img src="${el.profilimage}" width=50</td>
+                    <td><a href="" class="btn btn-success">Edit</a></td>
+                    <td><button class= "btn btn-danger">Delete</button></td>
+                </tr>
+                `        
+            });
+        }).catch(err=>console.log(error))
+        }
+        getdatas();
+
+       document.addEventListener('click', function(e){
+         const deleteBtn = e.target.closest('.btn-danger')
+            if(deleteBtn){
+              const fName = deleteBtn.parentElement.parentElement.children[1].innerText
+                Swal.fire({
+                    title: fName,
+                    text: "silinsin mi?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'beli!',
+                    cancelButtonText: 'xeyr!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('https://646da3fa9c677e23218a2d12.mockapi.io/students/' +deleteBtn.parentElement.parentElement.children[0].innerText,
+                    {
+                        method: 'DELETE'
+                    }).then(res=>{
+                        if(res.ok){
+                            Swal.fire(
+                                'silindi!',
+                                'Your file has been deleted.',
+                                'success' )
+                                getdatas();
+           
+                        }
+                        else{
+                            Swal.fire(
+                                'oops!',
+                                'Your file has been deleted.',
+                                'danger')
+                        }
+                    })
+                    .catch(()=> Swal.fire('oops!','Your file has been deleted.','danger'))
+                    
+  }
+})
+            }
+       })
+    </script>
+</body>
+</html>
